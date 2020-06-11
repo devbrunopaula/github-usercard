@@ -125,3 +125,14 @@ body {
 
 
 
+.card h1 {
+  font-size: 3.2rem;
+  font-weight: 700;
+  padding-bottom: .5rem;
+}
+.card h3 {
+  font-size: 2rem;
+ 
+  font-style: italic;
+  padding-bottom: 1rem;
+}

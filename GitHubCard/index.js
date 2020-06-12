@@ -6,17 +6,12 @@
 
 
 
-function getData() {
-axios({
-    method: 'get',
-    url: 'https://api.github.com/users/devbrunopaula'
-  })
-  .then( res =>  Card(res.data))
+
+ axios.get('https://api.github.com/users/devbrunopaula')
+.then(res =>  cards.appendChild(CardComponent(res.data)))
   .catch( err => console.log(err))
 
-}
 
-getData()
  
 
 
@@ -28,45 +23,68 @@ getData()
 
     Skip to STEP 3.
 */
-{/* <img src="${avatar_url}" alt="${name}">
-<div>
- <h1>${name}</h1>
- <h3>${login}</h3>
- <p>location: ${location}</p>
- <p>Profile: <a href="${html_url}">GitHub Link</a></p>
- <p>Followers: ${followers}</p>
- <p>Bio:${bio}</p>
-</div> */}
-// const CardComp =  document.querySelector('.cards').innerHTML = Card()
-const body = document.querySelector('body')
-const CardComp =  document.querySelector('.cards')
 
-function Card(data) {
-console.log(data)
-  const { avatar_url, name,login, location, followers, html_url, bio } = data 
-  const CardComp =  document.querySelector('.cards__container')
 
-  CardComp.innerHTML += `
-            <div class="card">
-            <img src="${avatar_url}" alt="${name}">
-              <div>
-                <h1> ${name}</h1>
-                <h3> ${login}</h3>
-                <p>Location: ${location}</p>
-                <p>Profile: <a href="${html_url}">GitHub Link</a></p>
-                <p>Followers: ${followers}</p>
-                <p>Bio: ${bio}</p>
-              </div>
-            </div> 
-            `
 
- return CardComp
+const cards =  document.querySelector('.cards')
+
+function CardComponent(data) {
+const { avatar_url, name, login, location, html_url, followers, following, bio} = data
+ 
+  // Create
+const card  = document.createElement('div')
+const cardImage = document.createElement('img')
+
+const cardInfo = document.createElement('div')
+const cardName = document.createElement('h1')
+const cardUsername = document.createElement('h3')
+const cardLocation = document.createElement('p')
+const cardProfile = document.createElement('p')
+const gitUrl = document.createElement('a')
+const cardFollowers = document.createElement('p')
+const cardFollowing = document.createElement('p')
+const cardBio = document.createElement('p')
+
+// Add Class
+
+card.classList = 'card'
+cardInfo.classList = 'card__info'
+cardName.classList = 'name'
+cardUsername.classList = 'username'
+
+// TextContent 
+
+cardImage.src = avatar_url
+cardName.textContent = name
+cardUsername.textContent = login
+cardLocation.textContent = `Location: ${location}`
+gitUrl.innerHTML += `<a href="${html_url}">GitHub Link</a>`
+cardProfile.textContent = `Profile: `
+cardFollowers.textContent = `Followers: ${followers}`
+cardFollowing.textContent = `Following: ${following}`
+cardBio.textContent = bio
+
+
+// Append
+card.appendChild(cardImage)
+card.appendChild(cardInfo)
+cardInfo.appendChild(cardName)
+cardInfo.appendChild(cardUsername)
+cardInfo.appendChild(cardLocation)
+cardInfo.appendChild(cardProfile)
+cardProfile.appendChild(gitUrl)
+cardInfo.appendChild(cardFollowers)
+cardInfo.appendChild(cardFollowing)
+cardInfo.appendChild(cardBio)
+
+return card
 
 }
 
 
 
-body.appendChild = Card()
+
+
 
 
 /*
@@ -85,7 +103,14 @@ body.appendChild = Card()
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+
+
+let followersArray = ['tetondan', 'dustinmyers', 'justsml', 'luishrd', 'bigknell'];
+
+followersArray.forEach( user => {
+  axios.get(`https://api.github.com/users/${user}`)
+.then( res => cards.appendChild(CardComponent(res.data)) )
+})
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
@@ -117,32 +142,3 @@ const followersArray = [];
 */
 
 
-// const cardImage = document.createElement('img')
-// const h1 = document.createElement('h1')
-// const h3 = document.createElement('h3')
-// const locattionP = document.createElement('p')
-// const profileP = document.createElement('p')
-// const profileLink = document.createElement('a')
-// const followersP = document.createElement('p')
-
-// // Attri
-//  cardImage.src = avatar_url
-//  profileLink.href = html_url
-
-// //  Text Content
-// h1.textContent = name
-// h3.textContent = login
-// locattionP.textContent = `location: ${location}` 
-// profileP.textContent = 'Profile'
-// followersP.textContent = followers
-
-// // append
-//  CardComp.appendChild(cardImage)
-//  CardComp.appendChild(h1)
-//  CardComp.appendChild(locattionP)
-//  CardComp.appendChild(profileP)
-//  profileP.appendChild(profileLink)
-//  CardComp.appendChild(followersP)
- 
-
-//  return CardComp

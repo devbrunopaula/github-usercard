@@ -55,6 +55,7 @@ cardUsername.classList = 'username'
 // TextContent 
 
 cardImage.src = avatar_url
+cardImage.alt = name
 cardName.textContent = name
 cardUsername.textContent = login
 cardLocation.textContent = `Location: ${location}`
